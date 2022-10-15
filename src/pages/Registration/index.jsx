@@ -20,9 +20,9 @@ export const Registration = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      fullName: 'имя Фамилия',
-      email: 'test@test.ru',
-      password: '12345',
+      fullName: '',
+      email: '',
+      password: '',
     },
     mode: 'onChange',
   });
