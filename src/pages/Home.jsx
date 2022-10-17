@@ -5,7 +5,7 @@ import { Box, Tab, Tabs, Typography, Grid } from '@mui/material';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts, fetchTags } from '../redux/slices/posts';
+import { fetchPosts, fetchTags, fetchPostsPopular } from '../redux/slices/posts';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -26,15 +26,13 @@ export const Home = () => {
     dispatch(fetchTags());
   }, []);
 
-    
+  const handleTabNew = () => {
+    dispatch(fetchPosts());
+  };
 
-    const handleTabNew = () => {
-      console.log('new');
-    };
-
-    const handleTabPopular = () => {
-      console.log('popular');
-    };
+  const handleTabPopular = () => {
+    dispatch(fetchPostsPopular());
+  };
 
   return (
     <>
@@ -44,7 +42,6 @@ export const Home = () => {
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {tabIndex === 0 && (
             <Box>
               {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
                 isPostsLoading ? (
@@ -63,29 +60,7 @@ export const Home = () => {
                   />
                 ),
               )}
-            </Box>
-          )}  
-          {tabIndex === 1 && (
-            <Box>
-              {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
-                isPostsLoading ? (
-                  <Post key={index} isLoading={true} />
-                ) : (
-                  <Post
-                    id={obj._id}
-                    title={obj.title}
-                    imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''}
-                    user={obj.user}
-                    createdAt={obj.createdAt}
-                    viewsCount={obj.viewsCount}
-                    commentsCount={3}
-                    tags={obj.tags}
-                    isEditable={userData?._id === obj.user._id}
-                  />
-                ),
-              )}
-            </Box>
-          )} 
+            </Box> 
         </Grid>
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
