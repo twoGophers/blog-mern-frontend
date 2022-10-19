@@ -10,7 +10,6 @@ import List from "@mui/material/List";
 import Skeleton from "@mui/material/Skeleton";
 
 export const CommentsBlock = ({ comment, isLoading = true }) => {
-  console.log(comment);
   return (
     <SideBlock title="Комментарии">
       <List>

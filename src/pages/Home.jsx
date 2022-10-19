@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Tab, Tabs, Typography, Grid } from '@mui/material';
 
@@ -26,7 +26,7 @@ export const Home = () => {
   const isCommentsLoading = comment.status === 'loading';
   
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
     dispatch(fetchComments());
@@ -61,7 +61,7 @@ export const Home = () => {
                     user={obj.user}
                     createdAt={obj.createdAt}
                     viewsCount={obj.viewsCount}
-                    commentsCount={3}
+                    commentsCount={obj.comments}
                     tags={obj.tags}
                     isEditable={userData?._id === obj.user._id}
                   />

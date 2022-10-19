@@ -31,7 +31,7 @@ export const Comments = ({ comment, children, isLoading = true }) => {
                 </div>
               ) : (
                 <ListItemText
-                  primary={obj.comment}
+                  primary={obj.userName}
                   secondary={obj.comment}
                 />
               )}
