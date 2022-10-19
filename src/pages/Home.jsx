@@ -48,6 +48,7 @@ export const Home = () => {
                   <Post key={index} isLoading={true} />
                 ) : (
                   <Post
+                    key={index}
                     id={obj._id}
                     title={obj.title}
                     imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''}
