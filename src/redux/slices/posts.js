@@ -20,6 +20,16 @@ export const fetchRemovePost = createAsyncThunk('posts/fetchRemovePost', async (
   axios.delete(`/posts/${id}`),
 );
 
+export const fetchOnePost = createAsyncThunk('posts/fetchOnePost', async (id) => {
+  const { data } = await axios.get(`/posts/${id}`);
+  return data;
+});
+
+export const fetchOnePostComment = createAsyncThunk('posts/fetchOnePostComment', async (id) => {
+  const { data } = await axios.get(`/posts/${id}/comments`);
+  return data;
+});
+
 const initialState = {
   posts: {
     items: [],
@@ -29,6 +39,10 @@ const initialState = {
     items: [],
     status: 'loading',
   },
+  comment: {
+    items: [],
+    status: 'loading',
+  }
 };
 
 const postsSlice = createSlice({
@@ -49,6 +63,7 @@ const postsSlice = createSlice({
       state.posts.items = [];
       state.posts.status = 'error';
     },
+
     [fetchPostsPopular.pending]: (state) => {
       state.posts.items = [];
       state.posts.status = 'loading';
@@ -58,6 +73,19 @@ const postsSlice = createSlice({
       state.posts.status = 'loaded';
     },
     [fetchPostsPopular.rejected]: (state) => {
+      state.posts.items = [];
+      state.posts.status = 'error';
+    },
+
+    [fetchOnePost.pending]: (state) => {
+      state.posts.items = [];
+      state.posts.status = 'loading';
+    },
+    [fetchOnePost.fulfilled]: (state, action) => {
+      state.posts.items = action.payload;
+      state.posts.status = 'loaded';
+    },
+    [fetchOnePost.rejected]: (state) => {
       state.posts.items = [];
       state.posts.status = 'error';
     },
@@ -79,6 +107,20 @@ const postsSlice = createSlice({
     // Удаление статьи
     [fetchRemovePost.pending]: (state, action) => {
       state.posts.items = state.posts.items.filter((obj) => obj._id !== action.meta.arg);
+    },
+
+    // Получение комментов
+    [fetchOnePostComment.pending]: (state) => {
+      state.comment.items = [];
+      state.comment.status = 'loading';
+    },
+    [fetchOnePostComment.fulfilled]: (state, action) => {
+      state.comment.items = action.payload;
+      state.comment.status = 'loaded';
+    },
+    [fetchOnePostComment.rejected]: (state) => {
+      state.comment.items = [];
+      state.comment.status = 'error';
     },
   },
 });

@@ -2,9 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
 
 const initialState = {
-    comments: [],
-    loading: false,
-}
+    comment: {
+        items: [],
+        status: 'loading',
+    }
+};
 
 export const createComment = createAsyncThunk('comment/createComment', async ({ postId, comment }) => {
         try {
@@ -17,7 +19,7 @@ export const createComment = createAsyncThunk('comment/createComment', async ({ 
             console.log(error)
         }
     },
-)
+);
 
 export const getPostComments = createAsyncThunk('comment/getPostComments', async (postId) => {
         try {
@@ -27,7 +29,12 @@ export const getPostComments = createAsyncThunk('comment/getPostComments', async
             console.log(error)
         }
     },
-)
+);
+
+export const fetchComments = createAsyncThunk('posts/fetchComments', async () => {
+    const { data } = await axios.get('/comments');
+    return data;
+});
 
 export const commentSlice = createSlice({
     name: 'comment',
@@ -40,21 +47,24 @@ export const commentSlice = createSlice({
         },
         [createComment.fulfilled]: (state, action) => {
             state.loading = false
-            state.comments.push(action.payload)
+            state.comment.push(action.payload)
         },
         [createComment.rejected]: (state) => {
             state.loading = false
         },
-        // Получение комментов
-        [getPostComments.pending]: (state) => {
-            state.loading = true
+
+    // Получение тегов
+        [fetchComments.pending]: (state) => {
+            state.comment.items = [];
+            state.comment.status = 'loading';
         },
-        [getPostComments.fulfilled]: (state, action) => {
-            state.loading = false
-            state.comments = action.payload
+        [fetchComments.fulfilled]: (state, action) => {
+            state.comment.items = action.payload;
+            state.comment.status = 'loaded';
         },
-        [getPostComments.rejected]: (state) => {
-            state.loading = false
+        [fetchComments.rejected]: (state) => {
+            state.comment.items = [];
+            state.comment.status = 'error';
         },
     },
 })

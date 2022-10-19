@@ -39,7 +39,7 @@ export const Index = () => {
 
   return (
     <>
-      <form onSubmit={e => e.preventDefault()}>
+      <form>
         <div className={styles.root}>
           <Avatar
             classes={{ root: styles.avatar }}
