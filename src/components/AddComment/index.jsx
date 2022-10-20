@@ -28,7 +28,7 @@ export const Index = () => {
       };
 
       const { data } =  await axios.post(`/posts/${id}/comments`, fields);
-
+ console.log(data);
       const _id = data._id;
       navigate(`/posts/${_id}`);
       setComment('');
@@ -36,6 +36,8 @@ export const Index = () => {
       console.log(error);
     }
   };
+
+ 
 
   return (
     <>

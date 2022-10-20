@@ -18,23 +18,22 @@ export const Registration = () => {
   const dispatch = useDispatch();
   const inputFileRef = useRef(null);
   const [ opacityPlus, setOpacityPlus ] = useState(false);
-  const [imageUrl, setImageUrl] = useState('');
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({
+  const [imageAvatar, setImageAvatar] = useState('');
+  const { register, handleSubmit, formState: { errors, isValid }} = useForm({
     defaultValues: {
       fullName: '',
       email: '',
       password: '',
+      imageAvatar : imageAvatar
     },
     mode: 'onChange',
   });
 
+  
+
   const onSubmit = async (values) => {
     const data = await dispatch(fetchRegister(values));
-
+    console.log(values);
     if (!data.payload) {
       return alert('Не удалось регистрироваться!');
     }
@@ -50,7 +49,7 @@ export const Registration = () => {
       const file = event.target.files[0];
       formData.append('image', file);
       const { data } = await axios.post('/avatar', formData);
-      setImageUrl(data.url);
+      setImageAvatar(data.url);
     } catch (err) {
       console.warn(err);
       alert('Ошибка при загрузке файла!');
@@ -58,7 +57,7 @@ export const Registration = () => {
   };
 
   const onClickRemoveImage = () => {
-    setImageUrl('');
+    setImageAvatar('');
   };
 
   if (isAuth) {
@@ -71,20 +70,18 @@ export const Registration = () => {
         Создание аккаунта
       </Typography>
       <div className={styles.avatar}>
-        {imageUrl ? (
-            <div className={styles.imgAvatar} style={{ backgroundImage: `url('http://localhost:4444${imageUrl}')` }}>
-              <div className={styles.close}>
+        {imageAvatar ? (
+            <div className={styles.imgAvatar} style={{ backgroundImage: `url('http://localhost:4444${imageAvatar}')` }}>
+              <div className={styles.close} onClick={() => onClickRemoveImage }>
                 <img src={close} alt={close} srcset="" />
               </div>
             </div>
           ) : (
             <>
-              <div onMouseMove={setOpacityPlus(true)} className={styles.avatarBlock}>
+              <div onMouseOver={() => setOpacityPlus(true)} onMouseOut={() => setOpacityPlus(false)} className={styles.avatarBlock}>
                 <Avatar onClick={() => inputFileRef.current.click()} sx={{ width: 100, height: 100 }} />
                 <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
-                {/* { opacityPlus && 
-                  <div className={opacityPlus}></div>
-                }   */}
+                  <div className={styles.avatarAdd} style={ opacityPlus ? { display : 'none' } : { display: 'flex' } }></div> 
               </div>
             </>
           )
@@ -117,6 +114,11 @@ export const Registration = () => {
           label="Пароль"
           fullWidth
         />
+        <p 
+          {...register('imageAvatar')}
+          name={imageAvatar}  
+          hidden
+          >{imageAvatar}</p>
         <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
           Зарегистрироваться
         </Button>
