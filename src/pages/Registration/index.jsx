@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -7,6 +7,8 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import close from '../../assets/images/close-svgrepo-com.svg';
+import axios from '../../axios';
 
 import styles from './Login.module.scss';
 import { fetchAuth, fetchRegister, selectIsAuth } from '../../redux/slices/auth';
@@ -14,6 +16,9 @@ import { fetchAuth, fetchRegister, selectIsAuth } from '../../redux/slices/auth'
 export const Registration = () => {
   const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
+  const inputFileRef = useRef(null);
+  const [ opacityPlus, setOpacityPlus ] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
   const {
     register,
     handleSubmit,
@@ -39,6 +44,23 @@ export const Registration = () => {
     }
   };
 
+  const handleChangeFile = async (event) => {
+    try {
+      const formData = new FormData();
+      const file = event.target.files[0];
+      formData.append('image', file);
+      const { data } = await axios.post('/avatar', formData);
+      setImageUrl(data.url);
+    } catch (err) {
+      console.warn(err);
+      alert('Ошибка при загрузке файла!');
+    }
+  };
+
+  const onClickRemoveImage = () => {
+    setImageUrl('');
+  };
+
   if (isAuth) {
     return <Navigate to="/" />;
   }
@@ -49,7 +71,24 @@ export const Registration = () => {
         Создание аккаунта
       </Typography>
       <div className={styles.avatar}>
-        <Avatar sx={{ width: 100, height: 100 }} />
+        {imageUrl ? (
+            <div className={styles.imgAvatar} style={{ backgroundImage: `url('http://localhost:4444${imageUrl}')` }}>
+              <div className={styles.close}>
+                <img src={close} alt={close} srcset="" />
+              </div>
+            </div>
+          ) : (
+            <>
+              <div onMouseMove={setOpacityPlus(true)} className={styles.avatarBlock}>
+                <Avatar onClick={() => inputFileRef.current.click()} sx={{ width: 100, height: 100 }} />
+                <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
+                {/* { opacityPlus && 
+                  <div className={opacityPlus}></div>
+                }   */}
+              </div>
+            </>
+          )
+        }
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
