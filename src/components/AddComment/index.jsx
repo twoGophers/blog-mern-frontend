@@ -43,7 +43,7 @@ export const Index = () => {
 
   return (
     <>
-      <form>
+      <form onChange={(e) => e.preventDefault()}>
         <div className={styles.root}>
           { isAuth ? (
             <Avatar

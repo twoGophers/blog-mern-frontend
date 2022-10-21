@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Tab, Tabs, Typography, Grid } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 import { Post } from '../../components/Post';
 import { TagsBlock } from '../../components/TagsBlock';
@@ -11,6 +12,7 @@ import { fetchComments } from '../../redux/slices/comment';
 
 export const TagsPage = () => {
 
+  const { id } = useParams();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.auth.data);
   const { posts, tags } = useSelector((state) => state.posts);
@@ -33,18 +35,9 @@ export const TagsPage = () => {
     dispatch(fetchComments());
   }, []);
 
-  const handleTabNew = () => {
-    dispatch(fetchPosts());
-  };
-
-  const handleTabPopular = () => {
-    dispatch(fetchPostsPopular());
-  };
-
-
   return (
     <>
-    <p>sdfsfd</p>
+    <h3 style={{ fontSize: '32px' }}>#{id}</h3>
       <Grid xs={8} item>
         <Box>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>

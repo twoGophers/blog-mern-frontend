@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Tab, Tabs, Typography, Grid } from '@mui/material';
+import { Box, Tab, Tabs, Typography, Grid, CircularProgress } from '@mui/material';
 
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
@@ -39,43 +39,56 @@ export const Home = () => {
   const handleTabPopular = () => {
     dispatch(fetchPostsPopular());
   };
+
+
+
   return (
-    <>
-      <Tabs style={{ marginBottom: 15 }} value={tabIndex} onChange={handleTabChange} aria-label="basic tabs example">
+    <> 
+      {!isPostsLoading && !isTagsLoading && !isCommentsLoading ? 
+        (
+          <>
+            <Tabs style={{ marginBottom: 15 }} value={tabIndex} onChange={handleTabChange} aria-label="basic tabs example">
         <Tab label="Новые" onClick={handleTabNew} />
         <Tab label="Популярные" onClick={handleTabPopular} />
-      </Tabs>
-      <Grid container spacing={4}>
-        <Grid xs={8} item>
-            <Box>
-              {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
-                isPostsLoading ? (
-                  <Post key={index} isLoading={true} />
-                ) : (
-                  <Post
-                    key={index}
-                    id={obj._id}
-                    title={obj.title}
-                    imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''}
-                    user={obj.user}
-                    createdAt={obj.createdAt}
-                    viewsCount={obj.viewsCount}
-                    commentsCount={obj.comments}
-                    tags={obj.tags}
-                    isEditable={userData?._id === obj.user._id}
-                  />
-                ),
-              )}
-            </Box> 
-        </Grid>
-        <Grid xs={4} item>
-          <TagsBlock items={tags.items} isLoading={isTagsLoading} />
-          <CommentsBlock
-            comment={comment}
-            isLoading={isCommentsLoading}
-          />
-        </Grid>
-      </Grid>
+            </Tabs>
+            <Grid container spacing={4}>
+              <Grid xs={8} item>
+                  <Box>
+                    {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
+                      isPostsLoading ? (
+                        <Post key={index} isLoading={true} />
+                      ) : (
+                        <Post
+                          key={index}
+                          id={obj._id}
+                          title={obj.title}
+                          imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''}
+                          user={obj.user}
+                          createdAt={obj.createdAt}
+                          viewsCount={obj.viewsCount}
+                          commentsCount={obj.comments}
+                          tags={obj.tags}
+                          isEditable={userData?._id === obj.user._id}
+                        />
+                      ),
+                    )}
+                  </Box> 
+              </Grid>
+              <Grid xs={4} item>
+                <TagsBlock items={tags.items} isLoading={isTagsLoading} />
+                <CommentsBlock
+                  comment={comment}
+                  isLoading={isCommentsLoading}
+                />
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <Box sx={{ display: 'flex' }}>
+            <CircularProgress />
+          </Box>
+        )
+      }
     </>
   );
 };

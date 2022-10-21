@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import axios from '../axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { Box, CircularProgress } from '@mui/material';
 
 import { Post } from '../components/Post';
 import { Index } from '../components/AddComment';
@@ -21,34 +22,40 @@ export const FullPost = () => {
 
   const isLoading = posts.status === 'loading';
 
-
   useEffect(() => {
     dispatch(fetchOnePost(id));
     dispatch(fetchOnePostComment(id));
   }, []);
 
   if (isLoading) {
-    return <Post isLoading={isLoading} isFullPost />;
+    return <Post isLoading={isLoading} />;
   }
   return (
     <>
-      <Post
-        id={posts.items._id}
-        title={posts.items.title}
-        imageUrl={posts.itemsimageUrl ? `http://localhost:4444${posts.items.imageUrl}` : ''}
-        // imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
-        user={posts.items.user}
-        createdAt={posts.items.createdAt}
-        viewsCount={posts.items.viewsCount}
-        commentsCount={posts.items.comments}
-        tags={posts.items.tags}
-        isFullPost>
+    {!isLoading ? (
+      <>
+        <Post
+          id={posts.items._id}
+          title={posts.items.title}
+          imageUrl={posts.itemsimageUrl ? `http://localhost:4444${posts.items.imageUrl}` : ''}
+          // imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
+          user={posts.items.user}
+          createdAt={posts.items.createdAt}
+          viewsCount={posts.items.viewsCount}
+          commentsCount={posts.items.comments}
+          tags={posts.items.tags}
+          isFullPost>
         <ReactMarkdown children={posts.items.text} />
-      </Post>
-      
-      <Comments comment={comment} isLoading={false}>
-        <Index />
-      </Comments>
+        </Post>
+        <Comments comment={comment} isLoading={false}>
+          <Index />
+        </Comments>
+      </>
+      ) : (
+        <Box sx={{ display: 'flex' }}>
+          <CircularProgress />
+        </Box>
+      )}
     </>
   );
 };

@@ -22,9 +22,9 @@ export const Header = () => {
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
-          <a className={styles.logo} href="/">
+          <Link className={styles.logo} to="/">
             <div>ARCHAKOV BLOG</div>
-          </a>
+          </Link>
           <div className={styles.buttons}>
             {isAuth ? (
               <>

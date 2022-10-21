@@ -55,6 +55,9 @@ export const AddPost = () => {
         tags,
         text,
       };
+      
+      console.log(tags);
+      console.log(typeof(tags));
 
       const { data } = isEditing
         ? await axios.patch(`/posts/${id}`, fields)
@@ -63,6 +66,7 @@ export const AddPost = () => {
       const _id = isEditing ? id : data._id;
 
       navigate(`/posts/${_id}`);
+      window.location.reload();
     } catch (err) {
       console.warn(err);
       alert('Ошибка при создании статьи!');
@@ -135,7 +139,7 @@ export const AddPost = () => {
       />
       <TextField
         value={tags}
-        onChange={(e) => setTags(e.target.value)}
+        onChange={(e) => setTags(e.target.value.toLowerCase())}
         classes={{ root: styles.tags }}
         variant="standard"
         placeholder="Тэги"

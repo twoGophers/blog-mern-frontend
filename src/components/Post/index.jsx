@@ -68,7 +68,7 @@ export const Post = ({
           <ul className={styles.tags}>
             {tags.map((name) => (
               <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
+                <a href={`/tags/${name.trimStart()}`}>#{name.trimStart()}</a>
               </li>
             ))}
           </ul>
