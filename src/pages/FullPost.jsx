@@ -18,6 +18,7 @@ export const FullPost = () => {
   const dispatch = useDispatch();
   
   const { posts, comment } = useSelector((state) => state.posts);
+
   const isLoading = posts.status === 'loading';
 
 
@@ -29,7 +30,6 @@ export const FullPost = () => {
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost />;
   }
-
   return (
     <>
       <Post
@@ -40,7 +40,7 @@ export const FullPost = () => {
         user={posts.items.user}
         createdAt={posts.items.createdAt}
         viewsCount={posts.items.viewsCount}
-        commentsCount={comment.items.length}
+        commentsCount={posts.items.comments}
         tags={posts.items.tags}
         isFullPost>
         <ReactMarkdown children={posts.items.text} />

@@ -10,7 +10,6 @@ import List from "@mui/material/List";
 import Skeleton from "@mui/material/Skeleton";
 
 export const Comments = ({ comment, children, isLoading = true }) => {
-  console.log(comment);
   return (
     <SideBlock title="Комментарии">
       <List>
@@ -18,11 +17,11 @@ export const Comments = ({ comment, children, isLoading = true }) => {
           <React.Fragment key={index}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                {/* {isLoading ? (
+                {isLoading ? (
                   <Skeleton variant="circular" width={40} height={40} />
                 ) : (
-                  <Avatar alt={obj.user.fullName} src={obj.user.avatarUrl} />
-                )} */}
+                  <Avatar alt={`http://localhost:4444${obj.imageAvatarUrl}`} src={`http://localhost:4444${obj.imageAvatarUrl}`} />
+                )}
               </ListItemAvatar>
               {isLoading ? (
                 <div style={{ display: "flex", flexDirection: "column" }}>

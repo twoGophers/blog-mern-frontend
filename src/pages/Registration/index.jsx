@@ -24,16 +24,14 @@ export const Registration = () => {
       fullName: '',
       email: '',
       password: '',
-      imageAvatar : imageAvatar
     },
     mode: 'onChange',
   });
 
-  
-
   const onSubmit = async (values) => {
+
+    values.imageAvatar = imageAvatar;
     const data = await dispatch(fetchRegister(values));
-    console.log(values);
     if (!data.payload) {
       return alert('Не удалось регистрироваться!');
     }
@@ -114,11 +112,6 @@ export const Registration = () => {
           label="Пароль"
           fullWidth
         />
-        <p 
-          {...register('imageAvatar')}
-          name={imageAvatar}  
-          hidden
-          >{imageAvatar}</p>
         <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
           Зарегистрироваться
         </Button>

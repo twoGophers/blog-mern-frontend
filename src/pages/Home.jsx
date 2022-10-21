@@ -39,7 +39,6 @@ export const Home = () => {
   const handleTabPopular = () => {
     dispatch(fetchPostsPopular());
   };
-
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={tabIndex} onChange={handleTabChange} aria-label="basic tabs example">

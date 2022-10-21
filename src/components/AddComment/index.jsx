@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { createComment } from "../../redux/slices/comment";
+import { selectIsAuth } from "../../redux/slices/auth";
 
 export const Index = () => {
 
@@ -18,6 +19,8 @@ export const Index = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = Boolean(id);
+  const userData = useSelector((state) => state.auth.data);
+  const isAuth = useSelector(selectIsAuth);
 
   const handleSubmitComment = async () => {
     try {
@@ -28,7 +31,6 @@ export const Index = () => {
       };
 
       const { data } =  await axios.post(`/posts/${id}/comments`, fields);
- console.log(data);
       const _id = data._id;
       navigate(`/posts/${_id}`);
       setComment('');
@@ -43,10 +45,17 @@ export const Index = () => {
     <>
       <form>
         <div className={styles.root}>
-          <Avatar
-            classes={{ root: styles.avatar }}
-            src="https://mui.com/static/images/avatar/5.jpg"
-          />
+          { isAuth ? (
+            <Avatar
+              classes={{ root: styles.avatar }}
+              src={`http://localhost:4444${userData.imageAvatar}`}
+            />
+            ) : (
+              <Avatar
+                classes={{ root: styles.avatar }}
+                src="/noavatar.png'"
+              />
+            )}
           <div className={styles.form}>
             <TextField
               label="Написать комментарий"
@@ -57,7 +66,10 @@ export const Index = () => {
               onChange={(e) => setComment(e.target.value)}
               fullWidth
             />
-            <Button onClick={ handleSubmitComment } type="submit" variant="contained">Отправить</Button>
+            <Button disabled={!isAuth}  onClick={ handleSubmitComment } type="submit" variant="contained">Отправить</Button>
+            { !isAuth && (
+              <p style={{ fontSize: '14px' }}>Комментарий может отправлять только зарегистрированный пользователь</p>
+            )}
           </div>
         </div>
       </form>
