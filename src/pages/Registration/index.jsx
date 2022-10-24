@@ -69,7 +69,7 @@ export const Registration = () => {
       </Typography>
       <div className={styles.avatar}>
         {imageAvatar ? (
-            <div className={styles.imgAvatar} style={{ backgroundImage: `url('http://localhost:4444${imageAvatar}')` }}>
+            <div className={styles.imgAvatar} style={{ backgroundImage: `${process.env.REACT_APP_API_URL}${imageAvatar}')` }}>
               <div className={styles.close} onClick={() => onClickRemoveImage }>
                 <img src={close} alt={close} srcset="" />
               </div>
