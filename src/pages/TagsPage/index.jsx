@@ -34,7 +34,7 @@ export const TagsPage = () => {
                 key={index}
                 id={obj._id}
                 title={obj.title}
-                imageUrl={obj.imageUrl ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}` : ''}
+                imageUrl={obj.imageUrl ? `${process.env.REACT_APP_API_IMG}${obj.imageUrl}` : ''}
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
