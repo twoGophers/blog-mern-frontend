@@ -20,7 +20,7 @@ export const Comments = ({ comment, children, isLoading = true }) => {
                 {isLoading ? (
                   <Skeleton variant="circular" width={40} height={40} />
                 ) : (
-                  <Avatar alt={`${REACT_APP_API_URL}${obj.imageAvatarUrl}`} src={`${REACT_APP_API_URL}${obj.imageAvatarUrl}`} />
+                  <Avatar alt={`${obj.imageAvatarUrl}`} src={`${obj.imageAvatarUrl}`} />
                 )}
               </ListItemAvatar>
               {isLoading ? (
