@@ -14,16 +14,10 @@ import { useEffect } from 'react';
 export const TagsBlock = ({ items, isLoading = true }) => {
 const [tags, setTags ] = useState();
 
-useEffect(() => {
-  let tag = [...new Set(items)];
-  console.log(tag);
-  setTags(tag);
-}, []);
-
   return (
     <SideBlock title="Тэги">
       <List>
-        {(isLoading ? [...Array(5)] : tags).map((name, i) => (
+        {(isLoading ? [...Array(5)] : items).map((name, i) => (
           <a key={i} style={{ textDecoration: 'none', color: 'black' }} href={`/tags/${name}`}>
             <ListItem disablePadding>
               <ListItemButton>
