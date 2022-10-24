@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -9,19 +9,28 @@ import ListItemText from '@mui/material/ListItemText';
 import Skeleton from '@mui/material/Skeleton';
 
 import { SideBlock } from './SideBlock';
+import { useEffect } from 'react';
 
 export const TagsBlock = ({ items, isLoading = true }) => {
+const [tags, setTags ] = useState();
+
+useEffect(() => {
+  let tag = [...new Set(items)];
+  console.log(tag);
+  setTags(tag);
+}, []);
+
   return (
     <SideBlock title="Тэги">
       <List>
-        {(isLoading ? [...Array(5)] : items).map((name, i) => (
+        {(isLoading ? [...Array(5)] : tags).map((name, i) => (
           <a key={i} style={{ textDecoration: 'none', color: 'black' }} href={`/tags/${name}`}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   <TagIcon />
                 </ListItemIcon>
-                {isLoading ? <Skeleton width={100} /> : <ListItemText primary={name.toUpperCase()} />}
+                {isLoading ? <Skeleton width={100} /> : <ListItemText style={{ textTransform: 'capitalize' }} primary={name.toLowerCase ()} />}
               </ListItemButton>
             </ListItem>
           </a>

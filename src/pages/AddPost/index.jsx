@@ -18,7 +18,7 @@ export const AddPost = () => {
   const [isLoading, setLoading] = React.useState(false);
   const [text, setText] = React.useState('');
   const [title, setTitle] = React.useState('');
-  const [tags, setTags] = React.useState('');
+  const [tags, setTags] = React.useState([]);
   const [imageUrl, setImageUrl] = React.useState('');
   const inputFileRef = React.useRef(null);
 
@@ -45,10 +45,12 @@ export const AddPost = () => {
     setText(value);
   }, []);
 
+
+
   const onSubmit = async () => {
     try {
       setLoading(true);
-
+      
       const fields = {
         title,
         imageUrl,
@@ -56,8 +58,7 @@ export const AddPost = () => {
         text,
       };
       
-      console.log(tags);
-      console.log(typeof(tags));
+      
 
       const { data } = isEditing
         ? await axios.patch(`/posts/${id}`, fields)

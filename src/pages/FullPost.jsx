@@ -30,6 +30,7 @@ export const FullPost = () => {
   if (isLoading) {
     return <Post isLoading={isLoading} />;
   }
+  console.log(posts.items);
   return (
     <>
     {!isLoading ? (
@@ -43,6 +44,7 @@ export const FullPost = () => {
           createdAt={posts.items.createdAt}
           viewsCount={posts.items.viewsCount}
           commentsCount={posts.items.comments}
+
           tags={posts.items.tags}
           isFullPost>
         <ReactMarkdown children={posts.items.text} />

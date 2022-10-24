@@ -16,8 +16,8 @@ export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
   return data;
 });
 
-export const fetchTagsFilter = createAsyncThunk('posts/fetchTagsFilter', async (params) => {
-  const { data } = await axios.get(`/tags/${params}`);
+export const fetchTagsFilter = createAsyncThunk('tags/fetchTagsFilter', async (id) => {
+  const { data } = await axios.get(`/tags/${id}`);
   return data;
 });
 
@@ -108,6 +108,19 @@ const postsSlice = createSlice({
     [fetchTags.rejected]: (state) => {
       state.tags.items = [];
       state.tags.status = 'error';
+    },
+
+    [fetchTagsFilter.pending]: (state) => {
+      state.posts.items = [];
+      state.posts.status = 'loading';
+    },
+    [fetchTagsFilter.fulfilled]: (state, action) => {
+      state.posts.items = action.payload;
+      state.posts.status = 'loaded';
+    },
+    [fetchTagsFilter.rejected]: (state) => {
+      state.posts.items = [];
+      state.posts.status = 'error';
     },
 
     // Удаление статьи

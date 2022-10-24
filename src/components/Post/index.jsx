@@ -26,6 +26,7 @@ export const Post = ({
   isFullPost,
   isLoading,
   isEditable,
+  imageAvatarUrl
 }) => {
   const dispatch = useDispatch();
   if (isLoading) {
@@ -60,7 +61,7 @@ export const Post = ({
         />
       )}
       <div className={styles.wrapper}>
-        <UserInfo {...user} additionalText={createdAt} />
+        <UserInfo imageAvatarUrl={imageAvatarUrl} {...user} additionalText={createdAt} />
         <div className={styles.indention}>
           <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
             {isFullPost ? title : <a href={`/posts/${id}`}>{title}</a>}
@@ -68,7 +69,7 @@ export const Post = ({
           <ul className={styles.tags}>
             {tags.map((name) => (
               <li key={name}>
-                <a href={`/tags/${name.trimStart()}`}>#{name.trimStart()}</a>
+                <a href={`/tags/${name.trim()}`}>#{name.trim()}</a>
               </li>
             ))}
           </ul>
