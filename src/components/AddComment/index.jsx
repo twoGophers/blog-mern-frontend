@@ -48,7 +48,7 @@ export const Index = () => {
           { isAuth ? (
             <Avatar
               classes={{ root: styles.avatar }}
-              src={`/avatar/${userData.imageAvatar}`}
+              src={`${userData.imageAvatar}`}
             />
             ) : (
               <Avatar

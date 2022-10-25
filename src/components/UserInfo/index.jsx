@@ -5,7 +5,7 @@ export const UserInfo = ({imageAvatar, fullName, additionalText }) => {
   return (
     <div className={styles.root}>
       { imageAvatar ? (
-        <img className={styles.avatar} src={ `/avatar/${imageAvatar}`} alt={fullName} />
+        <img className={styles.avatar} src={ `${imageAvatar}`} alt={fullName} />
         ) : (
         <img className={styles.avatar} src={ '/noavatar.png'} alt={fullName} />
         )}

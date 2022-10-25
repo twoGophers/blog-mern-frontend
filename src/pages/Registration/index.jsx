@@ -69,7 +69,7 @@ export const Registration = () => {
       </Typography>
       <div className={styles.avatar}>
         {imageAvatar ? (
-            <div className={styles.imgAvatar} style={{ backgroundImage: `/avatar/${imageAvatar}')` }}>
+            <div className={styles.imgAvatar} style={{ backgroundImage: `${imageAvatar}')` }}>
               <div className={styles.close} onClick={() => onClickRemoveImage }>
                 <img src={close} alt={close} srcset="" />
               </div>
