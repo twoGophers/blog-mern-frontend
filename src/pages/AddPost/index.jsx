@@ -123,7 +123,7 @@ export const AddPost = () => {
           </Button>
           <img
             className={styles.image}
-            src={`${process.env.REACT_APP_API_URL}${imageUrl}`}
+            src={`/uploads/${imageUrl}`}
             alt="Uploaded"
           />
         </>
