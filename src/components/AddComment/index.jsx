@@ -45,7 +45,7 @@ export const Index = () => {
     <>
       <form onChange={(e) => e.preventDefault()}>
         <div className={styles.root}>
-          { isAuth ? (
+          {/* { isAuth ? (
             <Avatar
               classes={{ root: styles.avatar }}
               src={`${userData.imageAvatar}`}
@@ -55,7 +55,7 @@ export const Index = () => {
                 classes={{ root: styles.avatar }}
                 src="/noavatar.png'"
               />
-            )}
+            )} */}
           <div className={styles.form}>
             <TextField
               label="Написать комментарий"

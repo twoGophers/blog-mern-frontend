@@ -116,7 +116,7 @@ export const AddPost = () => {
         Загрузить превью
       </Button>
       <input ref={inputFileRef} type="file" name='post' onChange={handleChangeFile} hidden />
-      {imageUrl && (
+      {/* {imageUrl && (
         <>
           <Button variant="contained" color="error" onClick={onClickRemoveImage}>
             Удалить
@@ -127,7 +127,7 @@ export const AddPost = () => {
             alt="Uploaded"
           />
         </>
-      )}
+      )} */}
       <br />
       <br />
       <TextField

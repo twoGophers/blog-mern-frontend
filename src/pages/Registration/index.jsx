@@ -68,7 +68,7 @@ export const Registration = () => {
         Создание аккаунта
       </Typography>
       <div className={styles.avatar}>
-        {imageAvatar ? (
+        {/* {imageAvatar ? (
             <div className={styles.imgAvatar} style={{ backgroundImage: `${imageAvatar}')` }}>
               <div className={styles.close} onClick={() => onClickRemoveImage }>
                 <img src={close} alt={close} srcset="" />
@@ -83,7 +83,7 @@ export const Registration = () => {
               </div>
             </>
           )
-        }
+        } */}
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField

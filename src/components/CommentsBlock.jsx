@@ -16,13 +16,13 @@ export const CommentsBlock = ({ comment, isLoading = true }) => {
         {(isLoading ? [...Array(5)] : comment.items).map((obj, index) => (
           <React.Fragment key={index}>
             <ListItem alignItems="flex-start">
-              <ListItemAvatar>
+              {/* <ListItemAvatar>
                 {isLoading ? (
                   <Skeleton variant="circular" width={40} height={40} />
                 ) : (
                   <Avatar alt={`${obj.imageAvatarUrl}`} src={`${obj.imageAvatarUrl}`} />
                 )}
-              </ListItemAvatar>
+              </ListItemAvatar> */}
               {isLoading ? (
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Skeleton variant="text" height={25} width={120} />
